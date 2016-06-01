@@ -1,0 +1,63 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "com.netflix.nebula:nebula-bintray-plugin:3.4.0"
+    }
+}
+
+
+version = '0.1.0'
+
+apply plugin: 'groovy'
+apply plugin: 'checkstyle'
+apply plugin: 'codenarc'
+apply plugin: 'maven-publish'
+apply plugin: "nebula.nebula-bintray"
+
+group = 'space.jasan'
+
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
+
+repositories {
+   jcenter()
+}
+
+dependencies {
+    testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
+}
+
+bintray {
+  user = getPropertyOrUseDefault('bintrayUser', 'fake_user')
+  key = getPropertyOrUseDefault('bintrayKey', 'fake_key')
+
+  publications = ['nebula']
+  dryRun = false
+  publish = true
+  pkg {
+    repo = 'space'
+    userOrg = 'jasan'
+    name = project.name
+    desc = project.description
+    websiteUrl = 'https://github.com/jasanspace/${project.name}'
+    issueTrackerUrl = 'https://github.com/jasanspace/${project.name}/issues'
+    vcsUrl = 'https://github.com/jasanspace/${project.name}.git'
+    licenses = ['Apache-2.0']
+    labels = ['groovy', 'closure', 'lambda']
+    publicDownloadNumbers = true
+    attributes = [:]
+    version {
+      name = project.version
+      vcsTag = project.version
+      attributes = [:]
+    }
+  }
+}
+
+String getPropertyOrUseDefault(String propertyName, String defaultValue) {
+    hasProperty(propertyName) ? getProperty(propertyName) : defaultValue
+}
