@@ -1,4 +1,5 @@
 language: groovy
+# don't forget to update README when the jdk or groovy version changes
 jdk:
 - oraclejdk8
 - oraclejdk7
@@ -8,6 +9,6 @@ jdk:
 env:
   - GROOVY_VERSION=2.4.6
   - GROOVY_VERSION=2.3.11
-  - GROOVY_VERSION=2.2.3
+  - GROOVY_VERSION=2.2.2
   - GROOVY_VERSION=2.1.9
   - GROOVY_VERSION=2.0.8

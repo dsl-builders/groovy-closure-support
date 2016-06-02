@@ -122,3 +122,16 @@ dependencies {
 </dependency>
 ```
 
+## Version Compatibility
+This utility is tested against following JVMs
+  * OpenJDK 6
+  * OpenJDK 7
+  * OracleJDK 7
+  * OracleJDK 8
+
+ and following Groovy versions
+  * `2.0.8`
+  * `2.1.9`
+  * `2.2.2`
+  * `2.3.11`
+  * `2.4.6`
