@@ -25,7 +25,7 @@ repositories {
    jcenter()
 }
 
-String groovyVersion = System.getenv("GROOVY_VERSION") ?: '2.1.9'// '2.4.6'
+String groovyVersion = System.getenv("GROOVY_VERSION") ?: '2.4.6'
 
 dependencies {
     compile group: 'org.codehaus.groovy', name: 'groovy-all', version: groovyVersion
