@@ -20,15 +20,19 @@ import spock.lang.Unroll
         tester.delegate == token
 
         where:
-        method << ['setDelegateInterfaceTest' /* , 'setDelegateSAMTest' */]
+        method << ['setDelegateInterfaceTest', 'setClosureTest', 'setDelegateSAMTest']
 
     }
 
-    static setDelegateInterfaceTest(Runnable consumer, Object token) {
+    static void setDelegateInterfaceTest(Runnable consumer, Object token) {
         GroovyClosure.setDelegate(consumer, token)
     }
 
-    static setDelegateSAMTest(SAM consumer, Object token) {
+    static void setDelegateSAMTest(SAM consumer, Object token) {
+        GroovyClosure.setDelegate(consumer, token)
+    }
+
+    static void setClosureTest(Closure consumer, Object token) {
         GroovyClosure.setDelegate(consumer, token)
     }
 
