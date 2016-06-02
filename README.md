@@ -1,5 +1,7 @@
 # Groovy Closure Support for Java
 
+[![Build Status](https://travis-ci.org/jasanspace/groovy-closure-support.svg?branch=master)](https://travis-ci.org/jasanspace/groovy-closure-support)
+
 Groovy Closure Support for Java enables using closure delegation shortcuts on coerced closures.
 
 Currently supports setting delegate of closures coerced to single abstract method interfaces only.
