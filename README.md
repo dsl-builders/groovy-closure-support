@@ -4,7 +4,8 @@
 
 Groovy Closure Support for Java enables using closure delegation shortcuts on coerced closures.
 
-Currently supports setting delegate of closures coerced to single abstract method interfaces only.
+Support setting delegate of closures coerced to single abstract method interfaces (Groovy 2.0 and later) as well
+as for closures coerced to single abstract method abstract classes (Groovy 2.2 and later only).
 
 Imagine you have simple builder class which you want to use in Groovy-builder style to create nested
 structures.

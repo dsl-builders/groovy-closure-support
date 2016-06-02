@@ -20,7 +20,7 @@ import spock.lang.Unroll
         tester.delegate == token
 
         where:
-        method << ['setDelegateInterfaceTest', 'setClosureTest', 'setDelegateSAMTest']
+        method << testMethods
 
     }
 
@@ -34,6 +34,14 @@ import spock.lang.Unroll
 
     static void setClosureTest(Closure consumer, Object token) {
         GroovyClosure.setDelegate(consumer, token)
+    }
+
+    private static List<String> getTestMethods() {
+        List<String> ret = ['setDelegateInterfaceTest', 'setClosureTest']
+        if (!(GroovySystem.version ==~ /2\.[01]\..*/)) {
+            ret << 'setDelegateSAMTest'
+        }
+        ret
     }
 
 }
