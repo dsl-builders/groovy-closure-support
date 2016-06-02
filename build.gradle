@@ -25,8 +25,11 @@ repositories {
    jcenter()
 }
 
+String groovyVersion = System.getenv("GROOVY_VERSION") ?: '2.4.6'
+
 dependencies {
-    testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
+    compile group: 'org.codehaus.groovy', name: 'groovy-all', version: groovyVersion
+    testCompile "org.spockframework:spock-core:1.0-groovy-${getSpockClassifier(groovyVersion)}"
 }
 
 bintray {
@@ -93,4 +96,14 @@ artifacts {
 
 String getPropertyOrUseDefault(String propertyName, String defaultValue) {
     hasProperty(propertyName) ? getProperty(propertyName) : defaultValue
+}
+
+String getSpockClassifier(String groovyVersion) {
+    if (groovyVersion.startsWith('2.4')) {
+        return '2.4'
+    }
+    if (groovyVersion.startsWith('2.3')) {
+        return '2.3'
+    }
+    return '2.0'
 }

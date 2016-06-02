@@ -4,3 +4,10 @@ jdk:
 - oraclejdk7
 - openjdk7
 - openjdk6
+
+env:
+  - GROOVY_VERSION=2.4.6
+  - GROOVY_VERSION=2.3.11
+  - GROOVY_VERSION=2.2.3
+  - GROOVY_VERSION=2.1.9
+  - GROOVY_VERSION=2.0.8
