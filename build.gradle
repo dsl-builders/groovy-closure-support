@@ -1,11 +1,9 @@
 buildscript {
     repositories {
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
+        jcenter()
     }
     dependencies {
-        classpath "com.netflix.nebula:nebula-bintray-plugin:3.4.0"
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.6'
     }
 }
 
@@ -16,7 +14,7 @@ apply plugin: 'groovy'
 apply plugin: 'checkstyle'
 apply plugin: 'codenarc'
 apply plugin: 'maven-publish'
-apply plugin: "nebula.nebula-bintray"
+apply plugin: 'com.jfrog.bintray'
 
 group = 'space.jasan'
 
@@ -57,6 +55,41 @@ bintray {
     }
   }
 }
+
+jar {
+    manifest.attributes provider: 'gradle'
+}
+
+publishing {
+    publications {
+        nebula(MavenPublication) {
+            from components.java
+
+            artifact sourcesJar {
+                classifier "sources"
+            }
+
+            artifact javadocJar {
+                classifier "javadoc"
+            }
+        }
+    }
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar, javadocJar
+}
+
 
 String getPropertyOrUseDefault(String propertyName, String defaultValue) {
     hasProperty(propertyName) ? getProperty(propertyName) : defaultValue
