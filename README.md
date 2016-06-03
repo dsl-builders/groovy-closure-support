@@ -64,15 +64,13 @@ class GroovyUsage {
 
 ## Setup
 
-The binaries are hosted on BinTray: https://bintray.com/jasan/space/groovy-closure-support
+The binaries are hosted on Bintray JCenter: https://bintray.com/jasan/space/groovy-closure-support
 
 ### Gradle
 
 ```
 repositories {
-    maven {
-        url  'http://dl.bintray.com/jasan/space'
-    }
+    jcenter()
 }
 
 dependencies {
@@ -92,9 +90,9 @@ dependencies {
 				<snapshots>
 					<enabled>false</enabled>
 				</snapshots>
-				<id>bintray-jasan-space</id>
+				<id>central</id>
 				<name>bintray</name>
-				<url>http://dl.bintray.com/jasan/space</url>
+				<url>http://jcenter.bintray.com</url>
 			</repository>
 		</repositories>
 		<pluginRepositories>
@@ -102,9 +100,9 @@ dependencies {
 				<snapshots>
 					<enabled>false</enabled>
 				</snapshots>
-				<id>bintray-jasan-space</id>
+				<id>central</id>
 				<name>bintray-plugins</name>
-				<url>http://dl.bintray.com/jasan/space</url>
+				<url>http://jcenter.bintray.com</url>
 			</pluginRepository>
 		</pluginRepositories>
 		<id>bintray</id>
