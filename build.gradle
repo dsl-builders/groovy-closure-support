@@ -3,12 +3,12 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.6'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
     }
 }
 
 
-version = '0.2.0'
+version = '0.3.0'
 
 apply plugin: 'groovy'
 apply plugin: 'checkstyle'
@@ -18,18 +18,19 @@ apply plugin: 'com.jfrog.bintray'
 
 group = 'space.jasan'
 
-sourceCompatibility = 1.6
-targetCompatibility = 1.6
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
    jcenter()
 }
 
-String groovyVersion = System.getenv("GROOVY_VERSION") ?: '2.4.6'
+String groovyVersion = System.getenv("GROOVY_VERSION") ?: '2.5.2'
 
 dependencies {
-    compile group: 'org.codehaus.groovy', name: 'groovy-all', version: groovyVersion
-    testCompile "org.spockframework:spock-core:1.0-groovy-${getSpockClassifier(groovyVersion)}"
+    compileOnly group: 'org.codehaus.groovy', name: 'groovy-all', version: groovyVersion
+    testCompile group: 'org.codehaus.groovy', name: 'groovy-all', version: groovyVersion
+    testCompile "org.spockframework:spock-core:${getSpockClassifier(groovyVersion)}"
 }
 
 bintray {
@@ -99,11 +100,14 @@ String getPropertyOrUseDefault(String propertyName, String defaultValue) {
 }
 
 String getSpockClassifier(String groovyVersion) {
+    if (groovyVersion.startsWith('2.5')) {
+        return '1.2-groovy-2.5'
+    }
     if (groovyVersion.startsWith('2.4')) {
-        return '2.4'
+        return '1.0-groovy-2.4'
     }
     if (groovyVersion.startsWith('2.3')) {
-        return '2.3'
+        return '1.0-groovy-2.3'
     }
-    return '2.0'
+    return '1.0-groovy-2.0'
 }
