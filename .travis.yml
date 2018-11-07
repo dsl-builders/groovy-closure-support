@@ -2,9 +2,6 @@ language: groovy
 # don't forget to update README when the jdk or groovy version changes
 jdk:
 - oraclejdk8
-- oraclejdk7
-- openjdk7
-- openjdk6
 
 env:
   - GROOVY_VERSION=2.5.2

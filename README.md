@@ -144,9 +144,6 @@ dependencies {
 
 ## Version Compatibility
 This utility is tested against following JVMs
-  * OpenJDK 6
-  * OpenJDK 7
-  * OracleJDK 7
   * OracleJDK 8
 
  and following Groovy versions
