@@ -5,14 +5,14 @@ import spock.lang.Specification
 import java.util.function.Consumer
 
 /**
- * Tests for GroovyClosureConsumer
+ * Tests for ConsumerWithDelegate
  */
 @SuppressWarnings(['Indentation'])
-class GroovyClosureConsumerSpec extends Specification {
+class ConsumerWithDelegateSpec extends Specification {
 
     void 'use as consumer'() {
         given:
-            Consumer<ConsumerFoo> consumer = GroovyClosureConsumer.create {
+            Consumer<ConsumerFoo> consumer = ConsumerWithDelegate.create {
                 foo = 'FOO'
             }
         expect:

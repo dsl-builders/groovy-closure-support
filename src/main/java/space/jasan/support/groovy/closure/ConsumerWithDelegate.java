@@ -4,10 +4,10 @@ import groovy.lang.Closure;
 
 import java.util.function.Consumer;
 
-public class GroovyClosureConsumer<T> implements Consumer<T> {
+public class ConsumerWithDelegate<T> implements Consumer<T> {
 
     public static <T> Consumer<T> create(Closure c, Object owner, int strategy) {
-        return new GroovyClosureConsumer<>(c, strategy, owner);
+        return new ConsumerWithDelegate<>(c, strategy, owner);
     }
 
     public static <T> Consumer<T> create(Closure c, Object owner) {
@@ -26,7 +26,7 @@ public class GroovyClosureConsumer<T> implements Consumer<T> {
     private final Object owner;
     private final Closure closure;
 
-    private GroovyClosureConsumer(Closure closure, int strategy, Object owner) {
+    private ConsumerWithDelegate(Closure closure, int strategy, Object owner) {
         this.strategy = strategy;
         this.owner = owner;
         this.closure = closure;

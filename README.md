@@ -62,8 +62,8 @@ class GroovyUsage {
 }
 ```
 
-Another approach is to create a Groovy extension which will itself accepts `Closure` and use `GroovyClosureConsumer` or
-`GroovyClosureFunction` to wrap closure as `Consumer` or `Function`. This approach is preferred as
+Another approach is to create a Groovy extension which will itself accepts `Closure` and use `ConsumerWithDelegate` or
+`FunctionWithDelegate` to wrap closure as `Consumer` or `Function`. This approach is preferred as
 it gives more options for static compilation hints. 
 
 ```java
@@ -75,7 +75,7 @@ class PointExtensions {
         @ClosureParams(value = SimpleType.class, options = "com.example.PointSource")
         Closure builder
     ) {
-        return self.add(GroovyClosureConsumer.create(builder));
+        return self.add(ConsumerWithDelegate.create(builder));
     }
 
 }
