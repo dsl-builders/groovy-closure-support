@@ -4,11 +4,17 @@ import spock.lang.Specification
 
 import java.util.function.Function
 
+/**
+ * Tests for GroovyClosureFunction
+ */
+@SuppressWarnings(['Indentation', 'SpaceAroundMapEntryColon'])
 class GroovyClosureFunctionSpec extends Specification {
 
     void 'use as function'() {
         given:
-            Function<FunctionFoo, FunctionFoo> closureFunction = GroovyClosureFunction.create({ new FunctionFoo(foo: bar, bar: foo) })
+            Function<FunctionFoo, FunctionFoo> closureFunction = GroovyClosureFunction.create {
+                new FunctionFoo(foo: bar, bar: foo)
+            }
         expect:
             AcceptsFunction.testMe(closureFunction).foo == 'bar'
     }
@@ -24,7 +30,7 @@ class AcceptsFunction {
 
     static FunctionFoo testMe(Function<FunctionFoo, FunctionFoo> function) {
         FunctionFoo foo = new FunctionFoo()
-        return function.apply(foo)
+        function.apply(foo)
     }
 
 }

@@ -6,12 +6,16 @@ import java.util.function.Consumer;
 
 public class GroovyClosureConsumer<T> implements Consumer<T> {
 
-    public static <T> Consumer<T> create(Closure c, int strategy, Object owner) {
+    public static <T> Consumer<T> create(Closure c, Object owner, int strategy) {
         return new GroovyClosureConsumer<>(c, strategy, owner);
     }
 
+    public static <T> Consumer<T> create(Closure c, Object owner) {
+        return create(c, owner, Closure.DELEGATE_FIRST);
+    }
+
     public static <T> Consumer<T> create(Closure c, int strategy) {
-        return create(c, strategy, c.getOwner());
+        return create(c, c.getOwner(), strategy);
     }
 
     public static <T> Consumer<T> create(Closure c) {

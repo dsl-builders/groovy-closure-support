@@ -6,12 +6,16 @@ import java.util.function.Function;
 
 public class GroovyClosureFunction<T, R> implements Function<T, R> {
 
-    public static <T, R> Function<T, R> create(Closure<R> c, int strategy, Object owner) {
+    public static <T, R> Function<T, R> create(Closure<R> c, Object owner, int strategy) {
         return new GroovyClosureFunction<>(c, strategy, owner);
     }
 
+    public static <T, R> Function<T, R> create(Closure<R> c, Object owner) {
+        return create(c, owner, Closure.DELEGATE_FIRST);
+    }
+
     public static <T, R> Function<T, R> create(Closure<R> c, int strategy) {
-        return create(c, strategy, c.getOwner());
+        return create(c, c.getOwner(), strategy);
     }
 
     public static <T, R> Function<T, R> create(Closure<R> c) {

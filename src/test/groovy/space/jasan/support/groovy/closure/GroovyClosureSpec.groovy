@@ -21,7 +21,6 @@ import spock.lang.Unroll
 
         where:
         method << testMethods
-
     }
 
     static void setDelegateInterfaceTest(Runnable consumer, Object token) {

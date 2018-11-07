@@ -4,11 +4,19 @@ import spock.lang.Specification
 
 import java.util.function.Consumer
 
+/**
+ * Tests for GroovyClosureConsumer
+ */
+@SuppressWarnings(['Indentation'])
 class GroovyClosureConsumerSpec extends Specification {
 
     void 'use as consumer'() {
+        given:
+            Consumer<ConsumerFoo> consumer = GroovyClosureConsumer.create {
+                foo = 'FOO'
+            }
         expect:
-            AcceptsConsumer.testMe(GroovyClosureConsumer.create { foo = 'FOO' }).foo == 'FOO'
+            AcceptsConsumer.testMe(consumer).foo == 'FOO'
     }
 
 }
@@ -23,7 +31,7 @@ class AcceptsConsumer {
     static ConsumerFoo testMe(Consumer<ConsumerFoo> consumer) {
         ConsumerFoo foo = new ConsumerFoo()
         consumer.accept(foo)
-        return foo
+        foo
     }
 
 }
