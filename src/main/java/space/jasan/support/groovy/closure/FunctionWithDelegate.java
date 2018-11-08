@@ -15,7 +15,7 @@ public class FunctionWithDelegate<T, R> implements Function<T, R> {
     }
 
     public static <T, R> Function<T, R> create(Closure<R> c, int strategy) {
-        return create(c, c.getOwner(), strategy);
+        return create(c, OwnerPropagator.getPropagatedOwner(c.getOwner()), strategy);
     }
 
     public static <T, R> Function<T, R> create(Closure<R> c) {

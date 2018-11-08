@@ -15,7 +15,7 @@ public class ConsumerWithDelegate<T> implements Consumer<T> {
     }
 
     public static <T> Consumer<T> create(Closure c, int strategy) {
-        return create(c, c.getOwner(), strategy);
+        return create(c, OwnerPropagator.getPropagatedOwner(c.getOwner()), strategy);
     }
 
     public static <T> Consumer<T> create(Closure c) {
