@@ -19,11 +19,25 @@ class ConsumerWithDelegateSpec extends Specification {
             AcceptsConsumer.testMe(consumer).foo == 'FOO'
     }
 
+    void 'owner is set from propagator'() {
+        when:
+            Object o = null
+            ConsumerWithDelegate.create({
+                o = foo
+            }, new ConsumerWithDifferentOwner()).accept 'foobar'
+        then:
+            o == 'foo'
+    }
+
 }
 
 class ConsumerFoo {
     String foo = 'foo'
     String bar = 'bar'
+}
+
+class ConsumerWithDifferentOwner implements OwnerPropagator {
+    final Object owner = new ConsumerFoo()
 }
 
 class AcceptsConsumer {
