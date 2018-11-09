@@ -2,6 +2,7 @@ package space.jasan.support.groovy.closure
 
 import spock.lang.Specification
 
+import java.util.concurrent.atomic.AtomicReference
 import java.util.function.Consumer
 
 /**
@@ -9,6 +10,8 @@ import java.util.function.Consumer
  */
 @SuppressWarnings(['Indentation'])
 class ConsumerWithDelegateSpec extends Specification {
+
+    private static final String something = 'smtg'
 
     void 'use as consumer'() {
         given:
@@ -23,10 +26,22 @@ class ConsumerWithDelegateSpec extends Specification {
         when:
             Object o = null
             ConsumerWithDelegate.create({
-                o = foo
-            }, new ConsumerWithDifferentOwner()).accept 'foobar'
+                ConsumerWithDelegate.create {
+                    o = foo
+                }.accept(it)
+            }).accept(new ConsumerFoo())
         then:
             o == 'foo'
+    }
+
+    void 'owner is set'() {
+        when:
+            AtomicReference<String> reference = new AtomicReference<>()
+            ConsumerWithDelegate.create({
+                reference.set(foo)
+            }, new FunctionFoo()).accept(something)
+        then:
+            reference.get() == 'foo'
     }
 
 }
@@ -34,10 +49,6 @@ class ConsumerWithDelegateSpec extends Specification {
 class ConsumerFoo {
     String foo = 'foo'
     String bar = 'bar'
-}
-
-class ConsumerWithDifferentOwner implements OwnerPropagator {
-    final Object owner = new ConsumerFoo()
 }
 
 class AcceptsConsumer {

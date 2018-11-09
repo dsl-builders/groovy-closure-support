@@ -81,39 +81,6 @@ class PointExtensions {
 }
 ``` 
 
-Sometimes you need to change the owner for the closures. In that case you may want to implement `OwnerPropagator` interface
-which will help to carry over the original owner of the top most closure.
-
-```java
-class PointBuilderOwnerPropagator implements OwnerPropagator, PointBuilder {
-    private final PointBuilder builder;
-    private final Object owner;
-    
-    public PointBuilderOwnerPropagator(PointBuilder delegate, Object owner) {
-        this.builder = delegate;
-        this.owner = owner;
-    }
-    
-    @Override Object getOwner() { return owner; }
-    @Override PointBuilder x(int x) { return builder.x(x); }
-    @Override PointBuilder y(int y) { return builder.y(y); }
-    
-}
-
-class PointExtensions {
-
-    public static Point add(
-        PointSource self,
-        @DelegatesTo(value = PointBuilder.class, strategy = Closure.DELEGATE_FIRST)
-        @ClosureParams(value = SimpleType.class, options = "com.example.PointBuilder")
-        Closure builder
-    ) {
-        return self.add(ConsumerWithDelegate.create(builder, new PointBuilderOwnerPropagator(self, builder.getOwner())));
-    }
-
-}
-```
-
 ## Setup
 
 The binaries are hosted on Bintray JCenter: https://bintray.com/jasan/space/groovy-closure-support
@@ -126,7 +93,7 @@ repositories {
 }
 
 dependencies {
-    compile 'space.jasan:groovy-closure-support:0.3.2'
+    compile 'space.jasan:groovy-closure-support:0.4.0'
 }
 ```
 
@@ -170,7 +137,7 @@ dependencies {
 <dependency>
   <groupId>space.jasan</groupId>
   <artifactId>groovy-closure-support</artifactId>
-  <version>0.3.2</version>
+  <version>0.4.0</version>
   <type>pom</type>
 </dependency>
 ```
