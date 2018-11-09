@@ -28,7 +28,7 @@ public class FunctionWithDelegate<T, R> implements Function<T, R> {
 
     private FunctionWithDelegate(Closure<R> closure, int strategy, Object owner) {
         this.strategy = strategy;
-        this.owner = owner;
+        this.owner = OwnerPropagator.getPropagatedOwner(owner);
         this.closure = closure;
     }
 

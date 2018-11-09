@@ -28,7 +28,7 @@ public class ConsumerWithDelegate<T> implements Consumer<T> {
 
     private ConsumerWithDelegate(Closure closure, int strategy, Object owner) {
         this.strategy = strategy;
-        this.owner = owner;
+        this.owner = OwnerPropagator.getPropagatedOwner(owner);
         this.closure = closure;
     }
 

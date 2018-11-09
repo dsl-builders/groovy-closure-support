@@ -19,11 +19,25 @@ class FunctionWithDelegateSpec extends Specification {
             AcceptsFunction.testMe(closureFunction).foo == 'bar'
     }
 
+    void 'owner is set from propagator'() {
+        when:
+            Object o = null
+            FunctionWithDelegate.create({
+                o = foo
+            }, new FunctionWithDifferentOwner()).apply 'foobar'
+        then:
+            o == 'foo'
+    }
+
 }
 
 class FunctionFoo {
     String foo = 'foo'
     String bar = 'bar'
+}
+
+class FunctionWithDifferentOwner implements OwnerPropagator {
+    final Object owner = new FunctionFoo()
 }
 
 class AcceptsFunction {
