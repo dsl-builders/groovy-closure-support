@@ -11,7 +11,7 @@ import java.util.function.Consumer
 @SuppressWarnings(['Indentation'])
 class ConsumerWithDelegateSpec extends Specification {
 
-    private static final String something = 'smtg'
+    private static final String SOMETHING = 'smtg'
 
     void 'use as consumer'() {
         given:
@@ -25,11 +25,11 @@ class ConsumerWithDelegateSpec extends Specification {
     void 'owner is set from propagator'() {
         when:
             Object o = null
-            ConsumerWithDelegate.create({
+            ConsumerWithDelegate.create {
                 ConsumerWithDelegate.create {
                     o = foo
                 }.accept(it)
-            }).accept(new ConsumerFoo())
+            }.accept(new ConsumerFoo())
         then:
             o == 'foo'
     }
@@ -39,7 +39,7 @@ class ConsumerWithDelegateSpec extends Specification {
             AtomicReference<String> reference = new AtomicReference<>()
             ConsumerWithDelegate.create({
                 reference.set(foo)
-            }, new FunctionFoo()).accept(something)
+            }, new FunctionFoo()).accept(SOMETHING)
         then:
             reference.get() == 'foo'
     }

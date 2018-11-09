@@ -11,7 +11,7 @@ import java.util.function.Function
 @SuppressWarnings(['Indentation', 'SpaceAroundMapEntryColon'])
 class FunctionWithDelegateSpec extends Specification {
 
-    private static final String something = 'smtg'
+    private static final String SOMETHING = 'smtg'
 
     void 'use as function'() {
         given:
@@ -39,7 +39,7 @@ class FunctionWithDelegateSpec extends Specification {
             AtomicReference<String> reference = new AtomicReference<>()
             FunctionWithDelegate.create({
                 reference.set(foo)
-            }, new FunctionFoo()).apply(something)
+            }, new FunctionFoo()).apply(SOMETHING)
         then:
             reference.get() == 'foo'
     }
