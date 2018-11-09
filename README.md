@@ -126,7 +126,7 @@ repositories {
 }
 
 dependencies {
-    compile 'space.jasan:groovy-closure-support:0.3.1'
+    compile 'space.jasan:groovy-closure-support:0.3.2'
 }
 ```
 
@@ -170,7 +170,7 @@ dependencies {
 <dependency>
   <groupId>space.jasan</groupId>
   <artifactId>groovy-closure-support</artifactId>
-  <version>0.3.1</version>
+  <version>0.3.2</version>
   <type>pom</type>
 </dependency>
 ```
