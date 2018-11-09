@@ -127,6 +127,8 @@ public class GroovyClosure {
 
     /**
      * Returns closure's owner if the object is closure or the object self otherwise
+     * @param object maybe a closure
+     * @return closure's owner if the object is closure or the object self otherwise
      */
     public static Object getPropagatedOwner(Object object) {
         if (object instanceof Closure) {
