@@ -15,7 +15,7 @@ public class ConsumerWithDelegate<T> implements Consumer<T> {
     }
 
     public static <T> Consumer<T> create(Closure c, int strategy) {
-        return create(c, c.getOwner(), strategy);
+        return create(c, GroovyClosure.getPropagatedOwner(c.getOwner()), strategy);
     }
 
     public static <T> Consumer<T> create(Closure c) {
@@ -28,7 +28,7 @@ public class ConsumerWithDelegate<T> implements Consumer<T> {
 
     private ConsumerWithDelegate(Closure closure, int strategy, Object owner) {
         this.strategy = strategy;
-        this.owner = OwnerPropagator.getPropagatedOwner(owner);
+        this.owner = owner;
         this.closure = closure;
     }
 

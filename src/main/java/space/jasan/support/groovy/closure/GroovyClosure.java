@@ -1,5 +1,7 @@
 package space.jasan.support.groovy.closure;
 
+import groovy.lang.Closure;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -121,6 +123,18 @@ public class GroovyClosure {
         }
 
         return potentialClosure;
+    }
+
+    /**
+     * Returns closure's owner if the object is closure or the object self otherwise
+     * @param object maybe a closure
+     * @return closure's owner if the object is closure or the object self otherwise
+     */
+    public static Object getPropagatedOwner(Object object) {
+        if (object instanceof Closure) {
+            return ((Closure) object).getOwner();
+        }
+        return object;
     }
 
 }

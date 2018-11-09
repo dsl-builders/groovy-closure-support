@@ -2,6 +2,7 @@ package space.jasan.support.groovy.closure
 
 import spock.lang.Specification
 
+import java.util.concurrent.atomic.AtomicReference
 import java.util.function.Function
 
 /**
@@ -9,6 +10,8 @@ import java.util.function.Function
  */
 @SuppressWarnings(['Indentation', 'SpaceAroundMapEntryColon'])
 class FunctionWithDelegateSpec extends Specification {
+
+    private static final String SOMETHING = 'smtg'
 
     void 'use as function'() {
         given:
@@ -22,11 +25,23 @@ class FunctionWithDelegateSpec extends Specification {
     void 'owner is set from propagator'() {
         when:
             Object o = null
-            FunctionWithDelegate.create({
-                o = foo
-            }, new FunctionWithDifferentOwner()).apply 'foobar'
+            FunctionWithDelegate.create {
+                FunctionWithDelegate.create {
+                    o = foo
+                }.apply(it)
+            }.apply(new FunctionFoo())
         then:
             o == 'foo'
+    }
+
+    void 'owner is set'() {
+        when:
+            AtomicReference<String> reference = new AtomicReference<>()
+            FunctionWithDelegate.create({
+                reference.set(foo)
+            }, new FunctionFoo()).apply(SOMETHING)
+        then:
+            reference.get() == 'foo'
     }
 
 }
@@ -34,10 +49,6 @@ class FunctionWithDelegateSpec extends Specification {
 class FunctionFoo {
     String foo = 'foo'
     String bar = 'bar'
-}
-
-class FunctionWithDifferentOwner implements OwnerPropagator {
-    final Object owner = new FunctionFoo()
 }
 
 class AcceptsFunction {

@@ -15,7 +15,7 @@ public class FunctionWithDelegate<T, R> implements Function<T, R> {
     }
 
     public static <T, R> Function<T, R> create(Closure<R> c, int strategy) {
-        return create(c, c.getOwner(), strategy);
+        return create(c, GroovyClosure.getPropagatedOwner(c.getOwner()), strategy);
     }
 
     public static <T, R> Function<T, R> create(Closure<R> c) {
@@ -28,7 +28,7 @@ public class FunctionWithDelegate<T, R> implements Function<T, R> {
 
     private FunctionWithDelegate(Closure<R> closure, int strategy, Object owner) {
         this.strategy = strategy;
-        this.owner = OwnerPropagator.getPropagatedOwner(owner);
+        this.owner = owner;
         this.closure = closure;
     }
 
