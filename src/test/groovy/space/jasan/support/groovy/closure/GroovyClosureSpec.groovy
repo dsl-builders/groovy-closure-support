@@ -75,13 +75,13 @@ class Level1 {
 
     Level2 level2 = new Level2()
 
-    void level2ManualDelegate(@DelegatesTo(value = Level2, strategy = Closure.DELEGATE_FIRST) Closure closure) {
+    void level2ManualDelegate(Closure closure) {
         Closure c = GroovyClosure.cloneWithTopLevelOwner closure
         c.delegate = level2
         c.call(level2)
     }
 
-    void level2MehodWithDelegate(@DelegatesTo(value = Level2, strategy = Closure.DELEGATE_FIRST) Closure closure) {
+    void level2MehodWithDelegate(Closure closure) {
         Closure c = GroovyClosure.cloneWithTopLevelOwner closure, level2
         c.call(level2)
     }
