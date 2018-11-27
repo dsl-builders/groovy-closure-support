@@ -93,7 +93,7 @@ repositories {
 }
 
 dependencies {
-    compile 'space.jasan:groovy-closure-support:0.4.0'
+    compile 'space.jasan:groovy-closure-support:0.5.0'
 }
 ```
 
@@ -137,7 +137,7 @@ dependencies {
 <dependency>
   <groupId>space.jasan</groupId>
   <artifactId>groovy-closure-support</artifactId>
-  <version>0.4.0</version>
+  <version>0.5.0</version>
   <type>pom</type>
 </dependency>
 ```
@@ -152,4 +152,4 @@ This utility is tested against following JVMs
   * `2.2.2`
   * `2.3.11`
   * `2.4.6`
-  * `2.5.2`
+  * `2.5.4`

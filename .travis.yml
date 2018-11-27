@@ -4,7 +4,7 @@ jdk:
 - oraclejdk8
 
 env:
-  - GROOVY_VERSION=2.5.2
+  - GROOVY_VERSION=2.5.4
   - GROOVY_VERSION=2.4.6
   - GROOVY_VERSION=2.3.11
   - GROOVY_VERSION=2.2.2
