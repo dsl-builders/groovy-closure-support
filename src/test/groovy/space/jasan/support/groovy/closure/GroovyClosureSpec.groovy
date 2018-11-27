@@ -3,8 +3,6 @@ package space.jasan.support.groovy.closure
 import spock.lang.Specification
 import spock.lang.Unroll
 
-import java.util.logging.Level
-
 /**
  * Specification for GroovyClosure helper.
  */
@@ -25,21 +23,23 @@ import java.util.logging.Level
         method << testMethods
     }
 
+    @SuppressWarnings(['Indentation', 'Instanceof'])
     void 'clone with top level owner - manual delegate'() {
         when:
             Level1 level1 = new Level1()
             level1.level2ManualDelegate {
-                level3 { "hello" }
+                level3 { 'hello' }
             }
         then:
             level1.level2.closure.owner instanceof GroovyClosureSpec
     }
 
+    @SuppressWarnings(['Indentation', 'Instanceof'])
     void 'clone with top level owner - method with delegate'() {
         when:
             Level1 level1 = new Level1()
             level1.level2MehodWithDelegate {
-                level3 { "hello" }
+                level3 { 'hello' }
             }
         then:
             level1.level2.closure.owner instanceof GroovyClosureSpec
@@ -77,7 +77,7 @@ class Level1 {
 
     void level2ManualDelegate(@DelegatesTo(value = Level2, strategy = Closure.DELEGATE_FIRST) Closure closure) {
         Closure c = GroovyClosure.cloneWithTopLevelOwner closure
-        c.setDelegate(level2)
+        c.delegate = level2
         c.call(level2)
     }
 
