@@ -137,4 +137,18 @@ public class GroovyClosure {
         return object;
     }
 
+    public static <T> Closure<T> cloneWithTopLevelOwner(Closure<T> closure) {
+        return cloneWithTopLevelOwner(closure, closure.getDelegate());
+    }
+
+    public static <T> Closure<T> cloneWithTopLevelOwner(Closure<T> closure, Object delegate) {
+        return cloneWithTopLevelOwner(closure, delegate, Closure.DELEGATE_FIRST);
+    }
+
+    public static <T> Closure<T> cloneWithTopLevelOwner(Closure<T> closure, Object delegate, int strategy) {
+        Closure<T> clone = closure.rehydrate(delegate, getPropagatedOwner(closure.getOwner()), closure.getThisObject());
+        clone.setResolveStrategy(strategy);
+        return clone;
+    }
+
 }
