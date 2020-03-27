@@ -25,11 +25,11 @@ repositories {
    jcenter()
 }
 
-String groovyVersion = System.getenv("GROOVY_VERSION") ?: '2.5.2'
+String groovyVersion = System.getenv("GROOVY_VERSION") ?: '2.5.10'
 
 dependencies {
-    compileOnly group: 'org.codehaus.groovy', name: 'groovy-all', version: groovyVersion
-    testCompile group: 'org.codehaus.groovy', name: 'groovy-all', version: groovyVersion
+    compileOnly group: 'org.codehaus.groovy', name: 'groovy', version: groovyVersion
+    testCompile group: 'org.codehaus.groovy', name: 'groovy', version: groovyVersion
     testCompile "org.spockframework:spock-core:${getSpockClassifier(groovyVersion)}"
 }
 
