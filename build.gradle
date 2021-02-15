@@ -8,7 +8,7 @@ buildscript {
 }
 
 
-version = '0.6.2'
+version = '0.6.3'
 
 apply plugin: 'groovy'
 apply plugin: 'checkstyle'
@@ -73,17 +73,19 @@ publishing {
                 name = 'Groovy Closure Support'
                 description = 'Bridge library between Java 8 functional interfaces and Groovy closure designed for building DSLs'
                 url = 'https://github.com/jasanspace/groovy-closure-support'
+                inceptionYear = '2015'
                 licenses {
                     license {
-                        name = 'The Apache License, Version 2.0'
-                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        name = 'Apache-2.0'
+                        url = 'https://spdx.org/licenses/Apache-2.0.html'
+                        distribution = 'repo'
                     }
                 }
                 developers {
                     developer {
                         id = 'musketyr'
                         name = 'Vladimir Orany'
-                        email = 'vladimir@orany.cz'
+                        roles = ['developer']
                     }
                 }
                 scm {
