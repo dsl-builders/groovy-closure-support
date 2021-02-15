@@ -8,7 +8,7 @@ buildscript {
 }
 
 
-version = '0.6.0'
+version = '0.6.1'
 
 apply plugin: 'groovy'
 apply plugin: 'checkstyle'
@@ -68,6 +68,29 @@ publishing {
     publications {
         nebula(MavenPublication) {
             from components.java
+
+            pom {
+                name = 'Groovy Closure Support'
+                description = 'Bridge library between Java 8 functional interfaces and Groovy closure designed for building DSLs'
+                url = 'https://github.com/jasanspace/groovy-closure-support'
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'musketyr'
+                        name = 'Vladimir Orany'
+                        email = 'vladimir@orany.cz'
+                    }
+                }
+                scm {
+                    connection = 'https://github.com/jasanspace/groovy-closure-support.git'
+                    url = 'https://github.com/jasanspace/groovy-closure-support'
+                }
+            }
 
             artifact sourcesJar {
                 classifier "sources"
