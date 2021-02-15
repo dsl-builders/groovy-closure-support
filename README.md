@@ -63,8 +63,8 @@ class GroovyUsage {
 ```
 
 Another approach is to create a Groovy extension which will itself accepts `Closure` and use `ConsumerWithDelegate`,
-`FunctionWithDelegate` or `PredicateWithDelegate` to wrap closure as `Consumer`, `Function` or `Predicate`. 
-This approach is preferred as it gives more options for static compilation hints. 
+`FunctionWithDelegate` or `PredicateWithDelegate` to wrap closure as `Consumer`, `Function` or `Predicate`.
+This approach is preferred as it gives more options for static compilation hints.
 
 ```java
 class PointExtensions {
@@ -79,7 +79,7 @@ class PointExtensions {
     }
 
 }
-``` 
+```
 
 ## Setup
 
@@ -93,7 +93,7 @@ repositories {
 }
 
 dependencies {
-    compile 'space.jasan:groovy-closure-support:0.6.1'
+    compile 'space.jasan:groovy-closure-support:0.6.2'
 }
 ```
 
@@ -102,7 +102,7 @@ dependencies {
 <dependency>
   <groupId>space.jasan</groupId>
   <artifactId>groovy-closure-support</artifactId>
-  <version>0.6.1</version>
+  <version>0.6.2</version>
   <type>pom</type>
 </dependency>
 ```
