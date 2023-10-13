@@ -1,5 +1,8 @@
 package space.jasan.support.groovy.closure
 
+import dsl.builders.support.groovy.closure.FunctionWithDelegate
+import groovy.transform.CompileDynamic
+import groovy.transform.CompileStatic
 import spock.lang.Specification
 
 import java.util.concurrent.atomic.AtomicReference
@@ -8,6 +11,7 @@ import java.util.function.Function
 /**
  * Tests for FunctionWithDelegate
  */
+@CompileDynamic
 @SuppressWarnings(['Indentation', 'SpaceAroundMapEntryColon'])
 class FunctionWithDelegateSpec extends Specification {
 
@@ -46,16 +50,20 @@ class FunctionWithDelegateSpec extends Specification {
 
 }
 
+@CompileStatic
 class FunctionFoo {
+
     String foo = 'foo'
     String bar = 'bar'
+
 }
 
+@CompileStatic
 class AcceptsFunction {
 
     static FunctionFoo testMe(Function<FunctionFoo, FunctionFoo> function) {
         FunctionFoo foo = new FunctionFoo()
-        function.apply(foo)
+        return function.apply(foo)
     }
 
 }

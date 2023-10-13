@@ -1,139 +1,150 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
-    }
+/*
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Copyright 2020-2023 Vladimir Orany.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+plugins {
+    id 'org.kordamp.gradle.java-project'
+    id 'org.kordamp.gradle.checkstyle'
+    id 'org.kordamp.gradle.codenarc'
+    id 'org.kordamp.gradle.coveralls'
+    id 'io.github.gradle-nexus.publish-plugin'
 }
 
+if (!project.hasProperty('ossrhUsername'))      ext.ossrhUsername       = System.getenv('SONATYPE_USERNAME') ?: '**UNDEFINED**'
+if (!project.hasProperty('ossrhPassword'))      ext.ossrhPassword       = System.getenv('SONATYPE_PASSWORD') ?: '**UNDEFINED**'
+if (!project.hasProperty('signingKeyId'))       ext.signingKeyId        = System.getenv('SIGNING_KEY_ID') ?: '**UNDEFINED**'
+if (!project.hasProperty('signingPassword'))    ext.signingPassword     = System.getenv('SIGNING_PASSWORD') ?: '**UNDEFINED**'
+if (!project.hasProperty('signingSecretKey'))   ext.signingSecretKey    = System.getenv('SIGNING_SECRET_KEY_PATH') ? rootProject.file(System.getenv('SIGNING_SECRET_KEY_PATH')).text : '**UNDEFINED**'
 
-version = '0.6.3'
+config {
+    release = (rootProject.findProperty('release') ?: false).toBoolean()
 
-apply plugin: 'groovy'
-apply plugin: 'checkstyle'
-apply plugin: 'codenarc'
-apply plugin: 'maven-publish'
-apply plugin: 'com.jfrog.bintray'
+    info {
+        name        = 'Groovy Closure Support'
+        vendor      = 'Vladimir Orany'
+        description = 'Bridge library between Java 8 functional interfaces and Groovy closure designed for building DSLs'
 
-group = 'space.jasan'
+        links {
+            website      = "https://github.com/dsl-builders/groovy-closure-support"
+            issueTracker = "https://github.com/dsl-builders/groovy-closure-support/issues"
+            scm          = "https://github.com/dsl-builders/groovy-closure-support.git"
+        }
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
-repositories {
-   jcenter()
-}
-
-String groovyVersion = System.getenv("GROOVY_VERSION") ?: '2.5.10'
-
-dependencies {
-    compileOnly group: 'org.codehaus.groovy', name: 'groovy', version: groovyVersion
-    testCompile group: 'org.codehaus.groovy', name: 'groovy', version: groovyVersion
-    testCompile "org.spockframework:spock-core:${getSpockClassifier(groovyVersion)}"
-}
-
-bintray {
-  user = getPropertyOrUseDefault('bintrayUser', 'fake_user')
-  key = getPropertyOrUseDefault('bintrayKey', 'fake_key')
-
-  publications = ['nebula']
-  dryRun = false
-  publish = true
-  pkg {
-    repo = 'space'
-    userOrg = 'jasan'
-    name = project.name
-    desc = project.description
-    websiteUrl = 'https://github.com/jasanspace/${project.name}'
-    issueTrackerUrl = 'https://github.com/jasanspace/${project.name}/issues'
-    vcsUrl = 'https://github.com/jasanspace/${project.name}.git'
-    licenses = ['Apache-2.0']
-    labels = ['groovy', 'closure', 'lambda']
-    publicDownloadNumbers = true
-    attributes = [:]
-    version {
-      name = project.version
-      vcsTag = project.version
-      attributes = [:]
-    }
-  }
-}
-
-jar {
-    manifest.attributes provider: 'gradle'
-}
-
-publishing {
-    publications {
-        nebula(MavenPublication) {
-            from components.java
-
-            pom {
-                name = 'Groovy Closure Support'
-                description = 'Bridge library between Java 8 functional interfaces and Groovy closure designed for building DSLs'
-                url = 'https://github.com/jasanspace/groovy-closure-support'
-                inceptionYear = '2015'
-                licenses {
-                    license {
-                        name = 'Apache-2.0'
-                        url = 'https://spdx.org/licenses/Apache-2.0.html'
-                        distribution = 'repo'
-                    }
-                }
-                developers {
-                    developer {
-                        id = 'musketyr'
-                        name = 'Vladimir Orany'
-                        roles = ['developer']
-                    }
-                }
-                scm {
-                    connection = 'scm:git:git://github.com/jasanspace/groovy-closure-support.git'
-                    developerConnection = 'scm:git:ssh://github.com/jasanspace/groovy-closure-support.git'
-                    url = 'http://github.com/jasanspace/groovy-closure-support'
-                }
+        people {
+            person {
+                id    = 'musketyr'
+                name  = 'Vladimir Orany'
+                roles = ['developer']
             }
+        }
 
-            artifact sourcesJar {
-                classifier "sources"
+        repositories {
+            repository {
+                name = 'localRelease'
+                url  = "${project.rootProject.buildDir}/repos/local/release"
             }
+            repository {
+                name = 'localSnapshot'
+                url  = "${project.rootProject.buildDir}/repos/local/snapshot"
+            }
+        }
+    }
 
-            artifact javadocJar {
-                classifier "javadoc"
+    licensing {
+        enabled = false
+    }
+
+    publishing {
+        enabled = false
+        signing {
+            enabled = signingSecretKey != '**UNDEFINED**'
+            keyId = signingKeyId
+            secretKey = signingSecretKey
+            password = signingPassword
+        }
+        releasesRepository = 'localRelease'
+        snapshotsRepository = 'localSnapshot'
+    }
+
+    quality {
+        checkstyle {
+            toolVersion = '8.27'
+        }
+
+        codenarc {
+            toolVersion = '3.3.0'
+        }
+    }
+
+    docs {
+        javadoc {
+            autoLinks {
+                enabled = false
+            }
+            aggregate {
+                enabled = false
+            }
+        }
+        groovydoc {
+            enabled = false
+            aggregate {
+                enabled = false
             }
         }
     }
 }
 
-task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-artifacts {
-    archives sourcesJar, javadocJar
-}
-
-
-String getPropertyOrUseDefault(String propertyName, String defaultValue) {
-    hasProperty(propertyName) ? getProperty(propertyName) : defaultValue
-}
-
-String getSpockClassifier(String groovyVersion) {
-    if (groovyVersion.startsWith('2.5')) {
-        return '1.2-groovy-2.5'
+nexusPublishing {
+    repositories {
+        sonatype {
+            username = ossrhUsername
+            password = ossrhPassword
+        }
     }
-    if (groovyVersion.startsWith('2.4')) {
-        return '1.0-groovy-2.4'
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
     }
-    if (groovyVersion.startsWith('2.3')) {
-        return '1.0-groovy-2.3'
+
+    license {
+        exclude '**/*.json'
+        exclude '***.yml'
     }
-    return '1.0-groovy-2.0'
+}
+
+subprojects { subproject ->
+    apply plugin: 'java-library'
+    apply plugin: 'groovy'
+
+    config {
+        publishing {
+            enabled = true
+        }
+    }
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    jar {
+        manifest.attributes provider: 'gradle'
+    }
+
+    test {
+        useJUnitPlatform()
+    }
 }

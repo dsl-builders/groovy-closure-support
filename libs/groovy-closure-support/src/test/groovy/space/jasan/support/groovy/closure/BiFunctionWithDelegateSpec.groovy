@@ -1,5 +1,8 @@
 package space.jasan.support.groovy.closure
 
+import dsl.builders.support.groovy.closure.BiFunctionWithDelegate
+import groovy.transform.CompileDynamic
+import groovy.transform.CompileStatic
 import spock.lang.Specification
 
 import java.util.concurrent.atomic.AtomicReference
@@ -8,6 +11,7 @@ import java.util.function.BiFunction
 /**
  * Tests for ConsumerWithDelegate
  */
+@CompileDynamic
 @SuppressWarnings(['Indentation'])
 class BiFunctionWithDelegateSpec extends Specification {
 
@@ -49,17 +53,21 @@ class BiFunctionWithDelegateSpec extends Specification {
 
 }
 
+@CompileStatic
 class BiFunctionFoo {
+
     String foo = 'foo'
     String bar = 'bar'
+
 }
 
+@CompileStatic
 class AcceptsBiFunction {
 
     static BiFunctionFoo testMe(BiFunction<BiFunctionFoo, BiFunctionFoo, BiFunctionFoo> consumer) {
         BiFunctionFoo foo = new BiFunctionFoo()
         consumer.apply(foo, foo)
-        foo
+        return foo
     }
 
 }
