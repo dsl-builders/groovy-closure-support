@@ -1,4 +1,4 @@
-package dsl.builders.support.groovy.closure;
+package space.jasan.support.groovy.closure;
 
 import groovy.lang.Closure;
 

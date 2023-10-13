@@ -91,14 +91,14 @@ repositories {
 }
 
 dependencies {
-    implementation 'dsl.builders:groovy-closure-support:1.0.0'
+    implementation 'space.jasan:groovy-closure-support:1.0.0'
 }
 ```
 
 ### Maven
 ```
 <dependency>
-  <groupId>dsl.builders</groupId>
+  <groupId>space.jasan</groupId>
   <artifactId>groovy-closure-support</artifactId>
   <version>1.0.0</version>
   <type>pom</type>
