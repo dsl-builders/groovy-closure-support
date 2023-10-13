@@ -12,7 +12,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: 11
-          vendor: zulu
+          distribution: zulu
 
       - uses: gradle/gradle-build-action@v2
         with:

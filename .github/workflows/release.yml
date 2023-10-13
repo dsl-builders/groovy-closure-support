@@ -15,7 +15,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: 11
-          vendor: zulu
+          distribution: zulu
 
       - name: Decode PGP
         id: write_file
