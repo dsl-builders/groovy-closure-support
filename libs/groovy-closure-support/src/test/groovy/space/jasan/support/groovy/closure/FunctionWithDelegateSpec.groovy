@@ -1,6 +1,6 @@
 package space.jasan.support.groovy.closure
 
-import dsl.builders.support.groovy.closure.FunctionWithDelegate
+import space.jasan.support.groovy.closure.FunctionWithDelegate
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
 import spock.lang.Specification
