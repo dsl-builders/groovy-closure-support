@@ -1,6 +1,5 @@
 package space.jasan.support.groovy.closure
 
-import space.jasan.support.groovy.closure.BiFunctionWithDelegate
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
 import spock.lang.Specification
