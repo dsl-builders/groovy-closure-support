@@ -1,5 +1,8 @@
 package space.jasan.support.groovy.closure
 
+import dsl.builders.support.groovy.closure.PredicateWithDelegate
+import groovy.transform.CompileDynamic
+import groovy.transform.CompileStatic
 import spock.lang.Specification
 
 import java.util.concurrent.atomic.AtomicReference
@@ -8,6 +11,7 @@ import java.util.function.Predicate
 /**
  * Tests for PredicateWithDelegate
  */
+@CompileDynamic
 @SuppressWarnings(['Indentation', 'SpaceAroundMapEntryColon'])
 class PredicateWithDelegateSpec extends Specification {
 
@@ -45,16 +49,20 @@ class PredicateWithDelegateSpec extends Specification {
 
 }
 
+@CompileStatic
 class PredicateFoo {
+
     String foo = 'foo'
     String bar = 'bar'
+
 }
 
+@CompileStatic
 class AcceptsPredicate {
 
     static boolean testMe(Predicate<PredicateFoo> predicate) {
         PredicateFoo foo = new PredicateFoo()
-        predicate.test(foo)
+        return predicate.test(foo)
     }
 
 }

@@ -1,11 +1,9 @@
 # Groovy Closure Support for Java
 
-[![Build Status](https://travis-ci.org/jasanspace/groovy-closure-support.svg?branch=master)](https://travis-ci.org/jasanspace/groovy-closure-support)
-
 Groovy Closure Support for Java enables using closure delegation shortcuts on coerced closures.
 
-Support setting delegate of closures coerced to single abstract method interfaces (Groovy 2.0 and later) as well
-as for closures coerced to single abstract method abstract classes (Groovy 2.2 and later only).
+Support setting delegate of closures coerced to single abstract method interfaces as well
+as for closures coerced to single abstract method abstract classes.
 
 Imagine you have simple builder class which you want to use in Groovy-builder style to create nested
 structures.
@@ -93,16 +91,16 @@ repositories {
 }
 
 dependencies {
-    compile 'space.jasan:groovy-closure-support:0.6.2'
+    implementation 'dsl.builders:groovy-closure-support:1.0.0'
 }
 ```
 
 ### Maven
 ```
 <dependency>
-  <groupId>space.jasan</groupId>
+  <groupId>dsl.builders</groupId>
   <artifactId>groovy-closure-support</artifactId>
-  <version>0.6.2</version>
+  <version>1.0.0</version>
   <type>pom</type>
 </dependency>
 ```
@@ -111,10 +109,7 @@ dependencies {
 This utility is tested against following JVMs
   * OracleJDK 8
 
- and following Groovy versions
-  * `2.0.8`
-  * `2.1.9`
-  * `2.2.2`
-  * `2.3.11`
-  * `2.4.6`
-  * `2.5.4`
+ and only Groovy 4.x is supported.
+
+Use the previous version `space.jasan:groovy-closure-support:0.6.2` for the Groovy 2.x and 3.x support.
+

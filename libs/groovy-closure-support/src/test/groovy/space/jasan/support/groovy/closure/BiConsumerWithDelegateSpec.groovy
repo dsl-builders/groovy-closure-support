@@ -1,5 +1,8 @@
 package space.jasan.support.groovy.closure
 
+import dsl.builders.support.groovy.closure.BiConsumerWithDelegate
+import groovy.transform.CompileDynamic
+import groovy.transform.CompileStatic
 import spock.lang.Specification
 
 import java.util.concurrent.atomic.AtomicReference
@@ -8,7 +11,8 @@ import java.util.function.BiConsumer
 /**
  * Tests for ConsumerWithDelegate
  */
-@SuppressWarnings(['Indentation'])
+@CompileDynamic
+@SuppressWarnings(['Indentation', 'ImplicitClosureParameter', 'JUnitPublicNonTestMethod'])
 class BiConsumerWithDelegateSpec extends Specification {
 
     private static final String SOMETHING = 'smtg'
@@ -26,10 +30,8 @@ class BiConsumerWithDelegateSpec extends Specification {
         when:
             Object o = null
             BiConsumerWithDelegate.create {
-                BiConsumerWithDelegate.create {
-                    o = foo
-                }.accept(it, it)
-            }.accept(new BiConsumerFoo(), new BiConsumerFoo(), )
+                BiConsumerWithDelegate.create { o = foo }.accept(it, it)
+            }.accept(new BiConsumerFoo(), new BiConsumerFoo())
         then:
             o == 'foo'
     }
@@ -46,17 +48,21 @@ class BiConsumerWithDelegateSpec extends Specification {
 
 }
 
+@CompileStatic
 class BiConsumerFoo {
+
     String foo = 'foo'
     String bar = 'bar'
+
 }
 
+@CompileStatic
 class AcceptsBiConsumer {
 
     static BiConsumerFoo testMe(BiConsumer<BiConsumerFoo, BiConsumerFoo> consumer) {
         BiConsumerFoo foo = new BiConsumerFoo()
         consumer.accept(foo, foo)
-        foo
+        return foo
     }
 
 }

@@ -1,0 +1,12 @@
+plugins {
+    id 'groovy'
+    id 'checkstyle'
+    id 'codenarc'
+    id 'maven-publish'
+}
+
+dependencies {
+    implementation group: 'org.apache.groovy', name: 'groovy', version: groovyVersion
+    testImplementation group: 'org.apache.groovy', name: 'groovy', version: groovyVersion
+    testImplementation "org.spockframework:spock-core:$spockVersion"
+}

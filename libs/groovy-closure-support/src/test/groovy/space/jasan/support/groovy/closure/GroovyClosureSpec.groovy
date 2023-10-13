@@ -1,14 +1,20 @@
 package space.jasan.support.groovy.closure
 
+import dsl.builders.support.groovy.closure.GroovyClosure
+import groovy.transform.CompileDynamic
+import groovy.transform.CompileStatic
 import spock.lang.Specification
 import spock.lang.Unroll
 
 /**
  * Specification for GroovyClosure helper.
  */
-@Unroll class GroovyClosureSpec extends Specification {
+@Unroll
+@CompileDynamic
+@SuppressWarnings('StaticMethodsBeforeInstanceMethods')
+class GroovyClosureSpec extends Specification {
 
-    void "test delegate #method"() {
+    void "check delegate #method"() {
         Object token = new Object()
         Closure tester = { }
 
@@ -62,15 +68,19 @@ import spock.lang.Unroll
         if (!(GroovySystem.version ==~ /2\.[01]\..*/)) {
             ret << 'setDelegateSAMTest'
         }
-        ret
+        return ret
     }
 
 }
 
+@CompileStatic
 abstract class SAM {
+
     abstract void testIt()
+
 }
 
+@CompileStatic
 class Level1 {
 
     Level2 level2 = new Level2()
@@ -88,6 +98,7 @@ class Level1 {
 
 }
 
+@CompileStatic
 class Level2 {
 
     Closure closure
