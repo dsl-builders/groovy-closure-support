@@ -23,7 +23,7 @@ plugins {
 }
 
 dependencies {
-    implementation group: 'org.apache.groovy', name: 'groovy', version: groovyVersion
+    compileOnly group: 'org.apache.groovy', name: 'groovy', version: groovyVersion
     testImplementation group: 'org.apache.groovy', name: 'groovy', version: groovyVersion
     testImplementation "org.spockframework:spock-core:$spockVersion"
 }
